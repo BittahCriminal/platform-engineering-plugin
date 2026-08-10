@@ -1,0 +1,9 @@
+{
+  "name": "platform-engineering",
+  "version": "0.0.1",
+  "description": "Platform engineering skills for Claude Code: Kubernetes operations, GitOps and CI/CD, infrastructure as code, observability, and cloud-native platform design.",
+  "author": {
+    "name": "L. Richard",
+    "url": "https://bytecloudconsulting.com"
+  }
+}
