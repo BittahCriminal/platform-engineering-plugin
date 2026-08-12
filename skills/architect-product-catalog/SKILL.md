@@ -89,6 +89,46 @@ already passed through the plan-time and runtime enforcement layers described in
 cataloging a golden path is a statement that its guardrails are already proven, not
 a promise to add them later.
 
+## Addendum — Kratix Promise as the fulfillment backend
+
+[Kratix](https://docs.kratix.io/) is the fulfillment backend this catalog's `Product`
+entries are pointing at, when the org uses it: a **Promise** is a cluster-scoped
+custom resource that installs a namespaced CRD as the consumer's request form and
+carries the delivery logic that honors requests against it. One catalog `Product` can
+map to one Promise (or a versioned Promise Release), which is a materially stronger
+binding than a hand-maintained Backstage template with no live fulfillment status
+behind it
+([Kratix README](https://github.com/syntasso/kratix/blob/7b12ae65677ef22f9ccf33cf72590886f5921e56/README.md);
+[Promise reference](https://docs.kratix.io/main/reference/promises/intro)).
+
+**What a `Product` entry should surface from the Promise, beyond the schema's own
+fields.** A Promise's `spec.api` (the consumer-facing CRD schema), `destinationSelectors`
+(eligible environments), `requiredPromises` (composition dependencies), and its
+Revision/Release/availability status are all *runtime facts* that should synchronize into
+the catalog entry rather than being copied once and left stale — "which API exists" and
+"which delivery revision fulfils existing requests" are related but distinct facts a
+catalog UI needs to show separately
+([Promise upgrades overview](https://docs.kratix.io/main/reference/promises/promise-upgrade/intro)).
+Ownership, support tier, cost/quota policy, and portal taxonomy remain catalog concerns
+that should NOT be inferred from the Promise alone — a Promise defines the mechanism, not
+the organizational accountability this schema's `owner_persona`/`sla` fields already own.
+
+**Do not treat the Marketplace as a certified catalog.** Kratix documents a
+community/Syntasso Marketplace (Postgres, Kafka, cert-manager, ArgoCD, Vault, Dapr, and
+more) explicitly as starter code under active development — review, pin, and test any
+marketplace Promise before it backs a `Product` entry; do not surface marketplace
+availability alone as evidence a capability is production-ready
+([Kratix Marketplace](https://docs.kratix.io/marketplace)).
+
+**Division of labor with Score-style workload specs.** Score (see
+`architect-workload-catalog`'s addendum) answers "what does this workload need to run?";
+Kratix answers "how can developers request this governed capability, and how does the
+platform deliver it?" A catalog `Product` should associate a workload's Score resource
+type with the Promise that fulfills it, rather than letting the workload definition
+dictate infrastructure details Kratix is meant to govern. See
+[../../docs/idp-adp-architect/workload-spec-components.md](../../docs/idp-adp-architect/workload-spec-components.md)
+for the full cross-project mapping.
+
 ## Depends on
 
 `architect-workload-catalog`

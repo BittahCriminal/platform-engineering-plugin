@@ -161,6 +161,42 @@ split every other `architect-*` skill's approval gates already encode; the
 blueprint's job is to say it out loud as an explicit organizational maturity
 statement rather than leaving it implicit in five different skills' flag rules.
 
+## Addendum — Radius as a blueprint validation/emission target
+
+[Radius](https://docs.radapp.io/) contributes a grammar this capstone can validate
+discovered/generated topology against, or optionally emit into, when an organization
+has Radius available as its application platform. Its core abstractions — **Environment**
+(landing zone: compute/providers/credentials/Recipes; targets a K8s namespace, an AWS
+account/region, or an Azure subscription/resource group), **Application** (the parent
+Bicep resource, e.g. `Applications.Core/applications@2023-10-01-preview`), and **Resource
+Type** (a versioned infra-agnostic API such as `Applications.Datastores/redisCaches` or
+`Applications.Core/containers`) — together form a typed application-topology grammar
+richer than this plugin's own `Workload`/`Product` pair
+([Application concepts](https://docs.radapp.io/concepts/applications/);
+[Environment concepts](https://docs.radapp.io/concepts/environments/);
+[Resource Type concepts](https://docs.radapp.io/concepts/resource-types/)).
+
+**Recipe / Recipe Pack as the resource-fulfillment check.** A **Recipe** is a versioned
+Bicep or Terraform template that implements a Resource Type for a specific Environment;
+a newer **Recipe Pack** (`Radius.Core/recipePacks@2025-08-01-preview`) groups Recipe
+definitions for reuse across Environments — note that `rad env update --recipe-packs` is
+still **preview** as of this research, so a blueprint should flag Recipe Pack usage as an
+experimental-tooling finding, not treat it as a stable baseline. Before this capstone
+reports a workload/product as deployable, it should validate that a Recipe actually
+exists for every logical resource type the workload declares, in every target
+Environment — a Radius Application with no matching Recipe in a given Environment is a
+finding this document should surface in the Findings register, the same way an unowned
+resource or an over-privileged binding is
+([Recipes concepts](https://docs.radapp.io/concepts/recipes/);
+[Recipe Pack schema](https://docs.radapp.io/reference/resources/radius/radius.core/2025-08-01-preview/recipepacks/)).
+
+**Positioning relative to this plugin's own schema.** Radius's typed graph is a stronger
+validation/emission target than a general replacement for `.platform/**` — it should be
+consumed where an org already runs Radius, not proposed as a new mandatory dependency for
+orgs that don't. See
+[../../docs/idp-adp-architect/workload-spec-components.md](../../docs/idp-adp-architect/workload-spec-components.md)
+for the full plane-by-plane split across Score, Radius, Kratix, and Dapr.
+
 ## Depends on
 
 `architect-infra-discovery`, `architect-permissions-mapper`,

@@ -119,6 +119,56 @@ This skill should assume App-of-Apps-shaped GitOps is the norm it's observing, n
 the exception — `linked_entity` values will often resolve to an Argo CD
 Application/ApplicationSet name, not a raw resource ID.
 
+## Addendum — the Kratix GitOps delivery lifecycle (a second, complementary pattern)
+
+[Kratix](https://docs.kratix.io/) implements a full request-to-delivery lifecycle that
+this skill should recognize and observe alongside the Argo CD → `repository_dispatch`
+→ GitHub Issues pattern above — the two are complementary, not competing: the Argo CD
+pattern is triggered by *deployment failure*, while Kratix's pipeline is triggered by a
+*new resource request*. Where an org runs Kratix, this is the lifecycle `architect-work-sync`
+should map its `WorkItem` records against:
+
+1. A developer creates an instance of a Promise's CRD (the *request*) — this is the
+   moment analogous to opening a ticket, and is where a `WorkItem` link record should
+   first be created.
+2. Kratix's Promise controller reconciles the request and runs the Resource Configure
+   Pipeline: a `reader` init container writes the request object to
+   `/kratix/input/object.yaml`, the author-supplied pipeline container(s) run against
+   it, and a `work-creator` sidecar turns whatever lands in `/kratix/output` into a
+   `Work` object; a `status-writer` can report status back onto the request.
+3. The scheduler matches the `Work`'s target requirements against registered
+   `Destination` objects via `destinationSelectors`, creating one `WorkPlacement` per
+   matched Destination.
+4. Each `WorkPlacement` is written to the State Store (`GitStateStore` or
+   `BucketStateStore`) that its Destination references — this is the actual handoff
+   point to GitOps, not a Kratix-internal deployment step.
+5. An external GitOps agent (Flux or Argo CD) observes the State Store and converges
+   the target cluster — which means a Kratix-fulfilled request eventually produces the
+   same kind of Argo CD Application/ApplicationSet this skill already expects to see
+   from the App-of-Apps pattern; a `linked_entity` may legitimately resolve through
+   *both* a Kratix request and an Argo CD Application for the same underlying resource.
+
+Deleting a request triggers the symmetric Resource Delete Pipeline. Reconciliation is
+continuous (a default ~10-hour resync cadence), so pipelines must be idempotent — running
+Configure again on an unchanged request must not create duplicate downstream resources,
+the same idempotency requirement this skill already enforces for its own adapters
+([Promise workflows](https://docs.kratix.io/main/reference/promises/workflows);
+[Resource workflows](https://docs.kratix.io/main/reference/resources/workflows);
+[GitStateStore reference](https://docs.kratix.io/main/reference/statestore/gitstatestore);
+[multi-destination management](https://docs.kratix.io/main/reference/destinations/multidestination-management)).
+
+**The one rule this skill must carry over unchanged: never edit Kratix-generated output
+in place.** A `Work`, `WorkPlacement`, or the files it writes into a State Store are
+generated artifacts of the pipeline run, not a place to hand-patch a fix — exactly like
+this skill's own rule against silently finalizing a ticket. If a generated result is
+wrong, the fix is to change the *request*, the *Promise*, or the *pipeline* that produced
+it, and let reconciliation regenerate the output; a `WorkItem` observing a Kratix-sourced
+`linked_entity` should treat any drift between the State Store and a manually-edited copy
+as a finding for this skill to surface, not something to reconcile silently
+([Kratix internal objects](https://docs.kratix.io/main/platform-concepts/kratix-resources)).
+See [../../docs/idp-adp-architect/workload-spec-components.md](../../docs/idp-adp-architect/workload-spec-components.md)
+for how this lifecycle fits alongside Score, Radius, and Dapr.
+
 ## Depends on
 
 `architect-persona-generator`, `architect-workload-catalog`

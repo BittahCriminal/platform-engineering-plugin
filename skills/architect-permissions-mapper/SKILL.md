@@ -146,6 +146,47 @@ policy binding is the parent every repo-scoped agent identity should inherit fro
 so a repo-level agent identity holding broader-than-inherited access is itself an
 `over-privileged` finding, symmetric with the human case.
 
+## Addendum — Radius Connection as an intent edge
+
+[Radius](https://docs.radapp.io/) models a workload's dependency on another resource as
+a **Connection** — an explicit `source` reference plus an optional `iam` block —
+rather than leaving dependency and access intent implicit in application code. Where a
+Radius application is present in discovered infrastructure, its Connections are a
+richer, declared source for `IdentityBinding` than most of what `architect-infra-discovery`
+can infer from raw resource scans, and should be ingested as first-class intent edges,
+not flattened into a generic `resource_id` reference
+([Azure connection how-to](https://docs.radapp.io/guides/author-apps/azure/azure-connection/)).
+
+**What's actually automated today — Azure only.** A Connection's `iam.kind: 'azure'`
+plus a role list (e.g. `"Key Vault Secrets User"`, `"Storage Blob Data Contributor"`)
+causes Radius to automatically create the corresponding Azure role assignment. This
+automation is **not documented for AWS or a generic IAM provider** — do not assume an
+AWS-hosted Radius Connection gets equivalent automatic role-assignment behavior; verify
+against the live Environment's provider before reporting it as covered
+([Azure provider Workload Identity setup](https://docs.radapp.io/guides/operations/providers/azure-provider/howto-azure-provider-wi/)).
+
+**Recommended new field — `confidence`.** Because a Connection can be *declared*
+(present in the Bicep source), *recipe-returned* (present in a Recipe's `result.values`/
+`result.secrets` output), *provider-observed* (confirmed against the cloud's own role-
+assignment API), or *runtime-validated* (the workload actually exercised the access), a
+single boolean "has access" flag loses information this mapper needs for its
+`over-privileged`/`unowned` heuristics. Add a `confidence` field to bindings sourced from
+Radius with one of those four values, and do not silently upgrade a `declared` binding to
+`provider-observed` without actually checking the cloud IAM API
+([Recipe Pack schema](https://docs.radapp.io/reference/resources/radius/radius.core/2025-08-01-preview/recipepacks/)).
+
+**Do not conflate control-plane identity with workload identity.** Radius's own
+control-plane components (`applications-rp`, the Bicep deployment engine, UCP) run under
+their own deployment identity — Azure Workload Identity or AWS IRSA, configured per
+provider — which is a **separate principal** from the Connection identity a *workload*
+uses to reach its dependency. A mapper that merges these two into one `IdentityBinding`
+row would make an over-privileged control-plane credential look like an over-privileged
+application credential, or vice versa; keep them as distinct rows even when they resolve
+to the same underlying cloud principal type
+([AWS IRSA setup](https://docs.radapp.io/guides/operations/providers/aws-provider/howto-aws-provider-irsa/)).
+See [../../docs/idp-adp-architect/workload-spec-components.md](../../docs/idp-adp-architect/workload-spec-components.md)
+for how this fits alongside Score, Kratix, and Dapr's security-plane contributions.
+
 ## Depends on
 
 `architect-infra-discovery`

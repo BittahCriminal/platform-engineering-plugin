@@ -86,6 +86,56 @@ that's healthy but simply hasn't scaled recently, and `architect-blueprint`'s
 capstone narrative should be able to tell the two apart
 ([*Workload Autoscaling Operations*](https://app.notion.com/3b8059b703e1814baa80c1e3c5dece78)).
 
+## Addendum — Score as the portable workload contract
+
+[Score](https://docs.score.dev/docs/) is the closest existing implementation of what this
+skill's `Workload.spec` field is already modeled on, and should be treated as the
+direct reference (or literal ingestion format) for that field rather than a loose
+inspiration. Score is a CNCF Sandbox project (accepted 2024-08-08) originated at
+Humanitec; the spec itself is at release `0.4.1` (2026-05-25), `apiVersion:
+score.dev/v1b1`, validated against a canonical JSON Schema (Draft 2020-12) that
+requires `apiVersion`, `metadata`, and `containers` and rejects unknown top-level keys
+([Score spec reference](https://docs.score.dev/docs/score-specification/score-spec-reference/);
+[CNCF Sandbox acceptance](https://www.cncf.io/blog/2024/08/08/score-accepted-as-a-cncf-sandbox-project/);
+[canonical JSON Schema](https://github.com/score-spec/spec/blob/main/score-v1b1.json)).
+
+**Resource model — directly reusable for the `resources` array.** Score's
+`resources.<name>` block is `type` (required — an abstract kind like `postgres`,
+`redis`, `dns`, `route`, `volume`; not a concrete chart or instance), `class`
+(optional, default `"default"`), `id` (optional — identical `type`+`class`+`id`
+across workloads means one shared resource, provisioned once, not duplicated), and
+`params` (an open object that may reference placeholders like
+`${resources.db.host}` or `${metadata.name}`). Resource evaluation forms an acyclic
+dependency graph. There is no portable `secret:true` marker in the spec itself —
+secrecy is translator-specific, so a discovered `${resources.*}` reference should not
+be assumed safe to log verbatim just because the spec doesn't flag it
+([Score spec reference](https://docs.score.dev/docs/score-specification/score-spec-reference/)).
+
+**Translator matrix — what actually turns `score.yaml` into a running workload.**
+Score itself is not a deployment platform; a separate translator does the binding:
+
+| Translator | Target | Status |
+|---|---|---|
+| `score-compose` | Docker Compose | Reference/active; broadest default resource catalog (postgres, redis, mysql, mongodb, amqp, kafka-topic, s3, dns, route, volume, service-port) |
+| `score-k8s` | Kubernetes | Reference/active; narrower default catalog, cleanup not fully implemented |
+| `score-helm` | Helm | **Explicitly deprecated upstream — do not use as a translator baseline for new work** |
+| Humanitec / `humctl` | Humanitec managed platform | Native binding to Resource Definitions via `humctl score deploy` |
+
+([score-compose README](https://github.com/score-spec/score-compose/blob/main/README.md);
+[score-k8s README](https://github.com/score-spec/score-k8s/blob/main/README.md);
+[score-helm README](https://github.com/score-spec/score-helm/blob/main/README.md);
+[Humanitec Score overview](https://developer.humanitec.com/app-humanitec-io/docs/score/overview/))
+
+**Explicit non-scope — why this skill still owns grouping/typing.** Score's own
+documentation disclaims policy/compliance, observability, CI/CD/GitOps, secrets
+standardization, full application/product topology, and infra lifecycle/cleanup as
+out of scope. In this plugin's terms: Score is the portable *deployable-workload
+contract* feeding this skill's `Workload.spec`, not a replacement for
+`architect-product-catalog`'s product-level concerns or `architect-permissions-mapper`'s
+security findings. See
+[../../docs/idp-adp-architect/workload-spec-components.md](../../docs/idp-adp-architect/workload-spec-components.md)
+for how Score, Radius, Kratix, and Dapr divide up this plugin's five planes.
+
 ## Depends on
 
 `architect-infra-discovery`

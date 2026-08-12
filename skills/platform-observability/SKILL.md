@@ -83,6 +83,38 @@ defined meaning), **Context** (service version, region, conditions),
 - "Instrument everything" instead of question-driven telemetry design
 - Treating observability as a cost center — measured ROI averages 2.6x
 
+## Addendum — Dapr as a native emitter, not a native backend
+
+[Dapr](https://docs.dapr.io/) (CNCF Graduated, moved from Incubating on 2024-10-30) is a
+relevant observability *source* wherever it's already running as a workload sidecar for
+other reasons — it should not be adopted purely for its telemetry, but its emission
+should be plugged into this skill's OTel standardization the moment it's present
+([CNCF graduation announcement](https://www.cncf.io/announcements/2024/11/12/cloud-native-computing-foundation-announces-dapr-graduation/)).
+
+Every `daprd` sidecar natively emits **distributed traces** (OpenTelemetry- and
+Zipkin-compatible, using W3C Trace Context) and **Prometheus-format metrics** for every
+Dapr-mediated call — service invocation, state operations, pub/sub, bindings, and
+Workflow executions all produce spans and metrics automatically, with no per-service
+instrumentation code required. That is a strong, direct win for this skill's "Automate
+instrumentation at scale" priority for any traffic that happens to flow through Dapr's
+building blocks
+([observability concept](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/concepts/observability-concept.md);
+[metrics overview](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/operations/observability/metrics/metrics-overview.md)).
+
+**The caveat this skill must not skip: Dapr is an emitter, not a backend.** Nothing
+about Dapr's tracing/metrics emission replaces the OTel Collector, Prometheus, Grafana,
+or Jaeger this skill already mandates — those still have to exist and be operated
+externally to ingest, store, and visualize what `daprd` emits. The **Dapr Dashboard** is
+an operational topology/health view over the Dapr control plane (which apps have
+sidecars, component health, configuration) — it is not a Grafana replacement and should
+not be reported as satisfying this skill's "dashboard defined as code" requirement.
+Treat Dapr-sourced telemetry exactly like any other OTel-compatible signal: route it
+through the Collector, apply the platform's semantic conventions, and hold it to the same
+four quality tests (Semantics/Context/Relations/Accuracy) as everything else
+([sidecar overview](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/concepts/dapr-services/sidecar.md)).
+See [../../docs/idp-adp-architect/workload-spec-components.md](../../docs/idp-adp-architect/workload-spec-components.md)
+for how Dapr's contribution here compares to Score, Radius, and Kratix on the other planes.
+
 ## As an agent
 
 When reviewing a service or design on the platform: check it emits OTel with

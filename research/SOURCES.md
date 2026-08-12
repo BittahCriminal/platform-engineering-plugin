@@ -97,6 +97,75 @@ redraws in [../docs/idp-adp-architect/diagrams.md](../docs/idp-adp-architect/dia
 | [Best of Both Worlds for Agentic Refactoring: GitHub Copilot + MicroVMs via Docker Sandbox](https://devblogs.microsoft.com/all-things-azure/best-of-both-worlds-for-agentic-refactoring-github-copilot-microvms-via-docker-sandbox/) | Article | Tangential — sandboxed agent execution, not core to this plugin's `.platform/**` scope | Fetched, fully read — page content polluted with unrelated spam comments below the article boundary (filtered out); no diagram images (terminal/IDE screenshots only) |
 | [Frameworks Only Matter When They Force Decisions](https://devblogs.microsoft.com/all-things-azure/frameworks-only-matter-when-they-force-decisions/) | Article | `architect-blueprint` (framework-assessment loop, WAF/NIST scorecard pattern); `architect-infra-discovery` (policy-assignment-as-resource addendum) | Fetched, fully read — no diagram images (assessment loop and scorecards are prose/HTML tables) |
 
+## Workload-specification components (Score, Radius, Kratix, Dapr)
+
+A fourth deep-dive pass, distinct from the agentic-platform-engineering series above.
+Requested explicitly as candidate *components* fulfilling this plugin's resource,
+security, observability, and CI/CD/delivery planes — none of the four is treated as a
+complete IDP/ADP solution on its own. Full cross-project mapping and per-plane
+synthesis: [../docs/idp-adp-architect/workload-spec-components.md](../docs/idp-adp-architect/workload-spec-components.md).
+Raw archived doc pages and cloned repos (kept for offline/no-network continuity) live
+under `/home/user/workspace/pe_plugin_research/` outside this repo, at the pinned
+commits cited below.
+
+| Source | Kind | Informs | Status |
+|---|---|---|---|
+| [Score docs](https://docs.score.dev/docs/) | Docs site | `architect-workload-catalog` (portable workload contract) | Fetched, fully read |
+| [Score spec reference](https://docs.score.dev/docs/score-specification/score-spec-reference/) | Docs page | `architect-workload-catalog` (resource model: `type`/`class`/`id`/`params`) | Fetched, fully read |
+| [score-spec/spec](https://github.com/score-spec/spec) (commit `1c2427d`) | Repo | `architect-workload-catalog` | Cloned, README + canonical schema read |
+| [Score canonical JSON Schema (score-v1b1.json)](https://github.com/score-spec/spec/blob/main/score-v1b1.json) | Schema file | `architect-workload-catalog` | Fetched, fully read |
+| [CNCF Sandbox acceptance announcement](https://www.cncf.io/blog/2024/08/08/score-accepted-as-a-cncf-sandbox-project/) | Article | `architect-workload-catalog` (maturity/governance status) | Fetched, fully read |
+| [CNCF Score project page](https://www.cncf.io/projects/score/) | Docs page | `architect-workload-catalog` | Fetched, fully read |
+| [score-compose README](https://github.com/score-spec/score-compose/blob/main/README.md) (commit `8296be5`) | Repo README | `architect-workload-catalog` (translator matrix) | Cloned, fully read |
+| [score-k8s README](https://github.com/score-spec/score-k8s/blob/main/README.md) (commit `314e437`) | Repo README | `architect-workload-catalog` (translator matrix) | Cloned, fully read |
+| [score-helm README](https://github.com/score-spec/score-helm/blob/main/README.md) (commit `cbc9c87`) | Repo README | `architect-workload-catalog` (translator matrix — flagged deprecated) | Cloned, fully read |
+| [Humanitec Score overview](https://developer.humanitec.com/app-humanitec-io/docs/score/overview/) | Docs page | `architect-workload-catalog` (Humanitec translator) | Fetched, fully read |
+| [Radius announcement — Enabling Developer Collaboration with Radius](https://opensource.microsoft.com/blog/2023/10/18/enabling-developer-collaboration-with-radius/) | Article | `architect-permissions-mapper`, `architect-blueprint` (origin/context) | Fetched, fully read |
+| [Radius docs home](https://docs.radapp.io/) | Docs site | `architect-blueprint`, `architect-permissions-mapper` | Fetched, fully read |
+| [Radius Application concepts](https://docs.radapp.io/concepts/applications/) | Docs page | `architect-blueprint` (Bicep application-topology grammar) | Fetched, fully read |
+| [Radius Environment concepts](https://docs.radapp.io/concepts/environments/) | Docs page | `architect-blueprint` | Fetched, fully read |
+| [Radius Resource Type concepts](https://docs.radapp.io/concepts/resource-types/) | Docs page | `architect-blueprint` | Fetched, fully read |
+| [Radius Recipes concepts](https://docs.radapp.io/concepts/recipes/) | Docs page | `architect-blueprint` (Recipe/Recipe Pack validation target) | Fetched, fully read |
+| [Radius Recipe Pack schema](https://docs.radapp.io/reference/resources/radius/radius.core/2025-08-01-preview/recipepacks/) | Reference page | `architect-blueprint`, `architect-permissions-mapper` (still preview — flagged) | Fetched, fully read |
+| [Radius Dashboard overview](https://docs.radapp.io/guides/tooling/dashboard/overview/) | Docs page | `architect-blueprint` (topology UI, not observability) | Fetched, fully read |
+| [Radius Azure connection how-to](https://docs.radapp.io/guides/author-apps/azure/azure-connection/) | Docs page | `architect-permissions-mapper` (Connection as intent edge, Azure-only role automation) | Fetched, fully read |
+| [Radius Azure Workload Identity setup](https://docs.radapp.io/guides/operations/providers/azure-provider/howto-azure-provider-wi/) | Docs page | `architect-permissions-mapper` (control-plane vs. workload identity) | Fetched, fully read |
+| [Radius AWS IRSA setup](https://docs.radapp.io/guides/operations/providers/aws-provider/howto-aws-provider-irsa/) | Docs page | `architect-permissions-mapper` (control-plane vs. workload identity) | Fetched, fully read |
+| [radius-project/radius](https://github.com/radius-project/radius) (commit `89f7c62`) | Repo | `architect-blueprint`, `architect-permissions-mapper` | Cloned, README + source read |
+| [radius-project/docs](https://github.com/radius-project/docs) (commit `800d284`) | Repo | `architect-blueprint`, `architect-permissions-mapper` | Cloned, fully read |
+| [Kratix docs home](https://docs.kratix.io/) | Docs site | `architect-product-catalog`, `architect-work-sync` | Fetched, fully read |
+| [Kratix README](https://github.com/syntasso/kratix/blob/7b12ae65677ef22f9ccf33cf72590886f5921e56/README.md) | Repo README | `architect-product-catalog`, `architect-work-sync` | Cloned, fully read |
+| [Kratix Promise reference](https://docs.kratix.io/main/reference/promises/intro) | Docs page | `architect-product-catalog` (Promise as fulfillment backend) | Fetched, fully read |
+| [Kratix Promise workflows](https://docs.kratix.io/main/reference/promises/workflows) | Docs page | `architect-work-sync` (Configure/Delete pipeline mechanics) | Fetched, fully read |
+| [Kratix Resource workflows](https://docs.kratix.io/main/reference/resources/workflows) | Docs page | `architect-work-sync` | Fetched, fully read |
+| [Kratix Promise upgrades overview](https://docs.kratix.io/main/reference/promises/promise-upgrade/intro) | Docs page | `architect-product-catalog` (Revision/Release status) | Fetched, fully read |
+| [Kratix multi-destination management](https://docs.kratix.io/main/reference/destinations/multidestination-management) | Docs page | `architect-work-sync` (scheduler/`destinationSelectors`) | Fetched, fully read |
+| [Kratix GitStateStore reference](https://docs.kratix.io/main/reference/statestore/gitstatestore) | Reference page | `architect-work-sync` (State Store handoff to GitOps) | Fetched, fully read |
+| [Kratix internal objects (platform concepts)](https://docs.kratix.io/main/platform-concepts/kratix-resources) | Docs page | `architect-work-sync` (Work/WorkPlacement lifecycle, never-edit-in-place rule) | Fetched, fully read |
+| [Kratix compound Promises guide](https://docs.kratix.io/main/guides/compound-promises) | Docs page | `architect-product-catalog` (`requiredPromises` composition) | Fetched, fully read |
+| [Kratix Marketplace](https://docs.kratix.io/marketplace) | Docs page | `architect-product-catalog` (starter code, not certified) | Fetched, fully read |
+| [syntasso/kratix-marketplace](https://github.com/syntasso/kratix-marketplace) | Repo | `architect-product-catalog` | Referenced, README read |
+| [Kratix v0.125.0 release notes](https://github.com/syntasso/kratix/releases/tag/v0.125.0) | Release notes | `architect-product-catalog` (maturity/versioning caveat) | Fetched, fully read |
+| [OpenUK Syntasso case study](https://openuk.uk/case-studies/case-study-syntasso/) | Case study | `architect-product-catalog` (CNCF-donation-ambition caveat — not currently CNCF) | Fetched, fully read |
+| [NatWest × Kratix case study](https://www.syntasso.io/case-studies/natwest-uses-kratix-to-reduce-developer-cognitive-load-and-enable-platform-cocreation) | Case study | `architect-product-catalog` | Fetched, fully read |
+| [syntasso/kratix](https://github.com/syntasso/kratix) (commit `7b12ae6`) | Repo | `architect-product-catalog`, `architect-work-sync` | Cloned, fully read |
+| [Dapr docs home](https://docs.dapr.io/) | Docs site | `platform-observability`, `platform-security` | Fetched, fully read |
+| [Dapr runtime README](https://github.com/dapr/dapr/blob/3044570/README.md) | Repo README | `platform-observability`, `platform-security` | Cloned, fully read |
+| [Dapr building-block concept](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/concepts/building-blocks-concept.md) | Docs page | `platform-observability`, `platform-security` (building-block inventory) | Cloned, fully read |
+| [Dapr sidecar overview](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/concepts/dapr-services/sidecar.md) | Docs page | `platform-observability` (emitter, not backend, caveat) | Cloned, fully read |
+| [Dapr components concept](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/concepts/components-concept.md) | Docs page | `platform-security` (Component `scopes`) | Cloned, fully read |
+| [Dapr component schema](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/reference/resource-specs/component-schema.md) | Reference page | `platform-security` | Cloned, fully read |
+| [Dapr security concept](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/concepts/security-concept.md) | Docs page | `platform-security` (app ID identity, mTLS) | Cloned, fully read |
+| [Dapr mTLS operations](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/operations/security/mtls.md) | Docs page | `platform-security` (Sentry CA, 24h cert validity) | Cloned, fully read |
+| [Dapr component scopes](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/operations/components/component-scopes.md) | Docs page | `platform-security` | Cloned, fully read |
+| [Dapr observability concept](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/concepts/observability-concept.md) | Docs page | `platform-observability` (native tracing/metrics emission) | Cloned, fully read |
+| [Dapr metrics overview](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/operations/observability/metrics/metrics-overview.md) | Docs page | `platform-observability` | Cloned, fully read |
+| [CNCF Dapr project page](https://www.cncf.io/projects/dapr/) | Docs page | `platform-observability`, `platform-security` (maturity status) | Fetched, fully read |
+| [CNCF Dapr graduation announcement](https://www.cncf.io/announcements/2024/11/12/cloud-native-computing-foundation-announces-dapr-graduation/) | Article | `platform-observability`, `platform-security` | Fetched, fully read |
+| [dapr/docs](https://github.com/dapr/docs) (commit `f5d0b6d`) | Repo | `platform-observability`, `platform-security` | Cloned, fully read |
+| [dapr/dapr](https://github.com/dapr/dapr) (commit `3044570`) | Repo | `platform-observability`, `platform-security` | Cloned, fully read |
+| [dapr/components-contrib](https://github.com/dapr/components-contrib) (commit `349892b`) | Repo | `platform-observability`, `platform-security` (component inventory counts) | Cloned, fully read |
+
 ## Not yet used
 
 `Streamlit for Data Science`, `Python Feature Engineering Cookbook`, `The Definitive
