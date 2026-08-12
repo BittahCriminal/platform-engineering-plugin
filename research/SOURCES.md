@@ -10,57 +10,67 @@ cite yet.
 **Status:** populated 2026-08-11 from the Notion library. Content-status/source-status
 columns are as tracked in Notion (`Extracted`/`Enriched`/`Mixed`, `Complete`/`Partial`).
 
+**Local mirror (2026-08-11):** the 32 Notion-linked rows below (Cloud Native and Platform
+Engineering, DevOps and CI/CD, Data Engineering and Analytics, and Software Engineering
+and Management sections) now link to local markdown files under
+[`sources/`](sources/) instead of the Notion pages directly, so this research is available
+without network/Notion access. Report-kind sources (Weave Intelligence, 1 chapter each) are
+mirrored at full depth — agent guide, Mermaid diagram, and complete transcript. Book-kind
+sources are mirrored at condensed depth — agent guide and Mermaid diagram per chapter, with
+the full verbatim transcript intentionally omitted (copyright); each file's front matter
+keeps the original Notion `source_notion_url` for provenance and full-text lookup.
+
 ## Cloud Native and Platform Engineering
 
 | Source | Kind | Author | Informs | Status |
 |---|---|---|---|---|
-| [Reference Architecture of an Internal Developer Platform on Azure](https://app.notion.com/3b8059b703e1812eb297ee11197decd4) | Report | Weave Intelligence | `platform-blueprint`; `architect-infra-discovery` (Azure adapter) | Enriched / Complete |
-| [Reference Architecture of an Internal Developer Platform on AWS](https://app.notion.com/3b8059b703e1816596fcc1cedfe2284e) | Report | Weave Intelligence | `platform-blueprint`; `architect-infra-discovery` (AWS adapter) | Enriched / Complete |
-| [Reference Architecture for an AI/ML Internal Developer Platform on GCP](https://app.notion.com/3b8059b703e181a6ada6ded95f884de7) | Report | Weave Intelligence | `platform-blueprint`; `architect-infra-discovery` (GCP adapter) | Enriched / Complete |
-| [Building the Sovereign Internal Developer Platform](https://app.notion.com/3b8059b703e181e6a28bd46d066a954c) | Report | Weave Intelligence | `platform-blueprint` (sovereignty axis) | Enriched / Complete |
-| [Platform Engineering for Architects](https://app.notion.com/39e059b703e1811c900aed95c12b98fd) | Book | Max Körbächer, Andreas Grabner, Hilliary Lipsig | `platform-blueprint`; `architect-blueprint` (capstone frame) | Extracted / Complete |
-| [The Platform Engineering Playbook](https://app.notion.com/3b8059b703e181fa90c6dd748e8d1ac8) | Book | — | `platform-blueprint`; `architect-product-catalog` (Platform as a Product) | Extracted / Complete |
-| [Cloud Native Anti-Patterns](https://app.notion.com/3b8059b703e181fb866bd054689b199c) | Book | Gerald Bachlmayr, Aiden Ziegelaar, Alan Blockley, Bojan Zivic | `platform-blueprint` (anti-patterns); `architect-permissions-mapper` (flag rules) | Extracted / Complete |
-| [Kubernetes Cluster Lifecycle Management for Platform Engineers](https://app.notion.com/3b8059b703e181d69629c698de881664) | Report | Weave Intelligence | `cluster-lifecycle`; `architect-infra-discovery` (K8s adapter) | Enriched / Complete |
-| [Kubernetes - An Enterprise Guide, Third Edition](https://app.notion.com/3b8059b703e181c78561f9718697460d) | Book | Marc Boorshtein, Scott Surovich | `cluster-lifecycle`; `architect-permissions-mapper` (K8s RBAC) | Extracted / Complete |
-| [The Kubernetes Bible](https://app.notion.com/39e059b703e18142ad92ccbb05918482) | Book | Gineesh Madapparambath, Russ McKendrick | `cluster-lifecycle`; `architect-infra-discovery` (K8s adapter) | Extracted / Complete |
-| [50 Kubernetes Concepts Every DevOps Engineer Should Know](https://app.notion.com/3b8059b703e1817a9de3e251893b66cd) | Book | Michael Levan | `cluster-lifecycle`; `architect-workload-catalog` (K8s workload types) | Extracted / Complete |
-| [Kubernetes Autoscaling](https://app.notion.com/3b8059b703e18104be67d7a86a89c8d1) | Book | Christian Melendez | `cluster-lifecycle` | Extracted / Complete |
-| [Mastering Terraform](https://app.notion.com/3b8059b703e181c6a4ead0a4e8f21dcf) | Book | Mark Tinderholt | `architect-infra-discovery` (IaC-declared resources); `platform-blueprint` (IaC slot) | Extracted / Complete |
-| [Observability for Platform Engineers](https://app.notion.com/3b8059b703e1813e832cdcf82c853043) | Report | Weave Intelligence | `platform-observability` | Enriched / Complete |
-| [Observability in the AI-Native Era](https://app.notion.com/3b8059b703e181ddbe28fa65f427fcbe) | Book | Andreas Grabner, Hilliary Lipsig, Robert Rati, Max Körbächer | `platform-observability`; `ai-native-platform` | Extracted / Complete |
-| [Vulnerability Management for Platform Engineers](https://app.notion.com/3b8059b703e181b69a18c4adbd90218f) | Report | Weave Intelligence | `platform-security`; `architect-permissions-mapper` (over-privileged flag) | Enriched / Complete |
-| [Cloud Development Environments for Platform Engineers](https://app.notion.com/3b8059b703e181bb8272c742d695fe21) | Report | Weave Intelligence | `cloud-dev-environments` | Enriched / Complete |
-| [The Four Levels of Agentic Software Development in the Enterprise](https://app.notion.com/3b8059b703e18104863dd219a0a12d3b) | Report | Weave Intelligence | `ai-native-platform` | Enriched / Complete |
-| [Operationalizing AI Coding Agents in Regulated Industries](https://app.notion.com/3b8059b703e1818ea8b0df3ada3526ad) | Report | Weave Intelligence | `ai-native-platform`; `architect-permissions-mapper` (governed-access framing) | Enriched / Complete |
-| [The Great Unlock - How Platform Engineering Creates AI-Native Enterprises](https://app.notion.com/3b8059b703e181189b93eaf9cc8fa858) | Report | Weave Intelligence | `ai-native-platform` | Enriched / Complete |
-| [State of AI in Platform Engineering](https://app.notion.com/3b8059b703e181438a69d221fd255fb7) | Report | Weave Intelligence | `platform-state-of-play` | Enriched / Complete |
-| [State of Platform Engineering Report - Volume 4](https://app.notion.com/3b8059b703e181e398d1f44032278244) | Report | Weave Intelligence | `platform-state-of-play` | Enriched / Complete |
+| [Reference Architecture of an Internal Developer Platform on Azure](sources/cloud-native-platform-engineering/reference-architecture-idp-azure.md) | Report | Weave Intelligence | `platform-blueprint`; `architect-infra-discovery` (Azure adapter) | Enriched / Complete |
+| [Reference Architecture of an Internal Developer Platform on AWS](sources/cloud-native-platform-engineering/reference-architecture-idp-aws.md) | Report | Weave Intelligence | `platform-blueprint`; `architect-infra-discovery` (AWS adapter) | Enriched / Complete |
+| [Reference Architecture for an AI/ML Internal Developer Platform on GCP](sources/cloud-native-platform-engineering/reference-architecture-aiml-idp-gcp.md) | Report | Weave Intelligence | `platform-blueprint`; `architect-infra-discovery` (GCP adapter) | Enriched / Complete |
+| [Building the Sovereign Internal Developer Platform](sources/cloud-native-platform-engineering/building-the-sovereign-idp.md) | Report | Weave Intelligence | `platform-blueprint` (sovereignty axis) | Enriched / Complete |
+| [Platform Engineering for Architects](sources/cloud-native-platform-engineering/platform-engineering-for-architects.md) | Book | Max Körbächer, Andreas Grabner, Hilliary Lipsig | `platform-blueprint`; `architect-blueprint` (capstone frame) | Extracted / Complete |
+| [The Platform Engineering Playbook](sources/cloud-native-platform-engineering/platform-engineering-playbook.md) | Book | — | `platform-blueprint`; `architect-product-catalog` (Platform as a Product) | Extracted / Complete |
+| [Cloud Native Anti-Patterns](sources/cloud-native-platform-engineering/cloud-native-anti-patterns.md) | Book | Gerald Bachlmayr, Aiden Ziegelaar, Alan Blockley, Bojan Zivic | `platform-blueprint` (anti-patterns); `architect-permissions-mapper` (flag rules) | Extracted / Complete |
+| [Kubernetes Cluster Lifecycle Management for Platform Engineers](sources/cloud-native-platform-engineering/kubernetes-cluster-lifecycle-management.md) | Report | Weave Intelligence | `cluster-lifecycle`; `architect-infra-discovery` (K8s adapter) | Enriched / Complete |
+| [Kubernetes - An Enterprise Guide, Third Edition](sources/cloud-native-platform-engineering/kubernetes-an-enterprise-guide-3e.md) | Book | Marc Boorshtein, Scott Surovich | `cluster-lifecycle`; `architect-permissions-mapper` (K8s RBAC) | Extracted / Complete |
+| [The Kubernetes Bible](sources/cloud-native-platform-engineering/the-kubernetes-bible.md) | Book | Gineesh Madapparambath, Russ McKendrick | `cluster-lifecycle`; `architect-infra-discovery` (K8s adapter) | Extracted / Complete |
+| [50 Kubernetes Concepts Every DevOps Engineer Should Know](sources/cloud-native-platform-engineering/50-kubernetes-concepts.md) | Book | Michael Levan | `cluster-lifecycle`; `architect-workload-catalog` (K8s workload types) | Extracted / Complete |
+| [Kubernetes Autoscaling](sources/cloud-native-platform-engineering/kubernetes-autoscaling.md) | Book | Christian Melendez | `cluster-lifecycle` | Extracted / Complete |
+| [Mastering Terraform](sources/cloud-native-platform-engineering/mastering-terraform.md) | Book | Mark Tinderholt | `architect-infra-discovery` (IaC-declared resources); `platform-blueprint` (IaC slot) | Extracted / Complete |
+| [Observability for Platform Engineers](sources/cloud-native-platform-engineering/observability-for-platform-engineers.md) | Report | Weave Intelligence | `platform-observability` | Enriched / Complete |
+| [Observability in the AI-Native Era](sources/cloud-native-platform-engineering/observability-in-the-ai-native-era.md) | Book | Andreas Grabner, Hilliary Lipsig, Robert Rati, Max Körbächer | `platform-observability`; `ai-native-platform` | Extracted / Complete |
+| [Vulnerability Management for Platform Engineers](sources/cloud-native-platform-engineering/vulnerability-management-for-platform-engineers.md) | Report | Weave Intelligence | `platform-security`; `architect-permissions-mapper` (over-privileged flag) | Enriched / Complete |
+| [Cloud Development Environments for Platform Engineers](sources/cloud-native-platform-engineering/cloud-development-environments-for-platform-engineers.md) | Report | Weave Intelligence | `cloud-dev-environments` | Enriched / Complete |
+| [The Four Levels of Agentic Software Development in the Enterprise](sources/cloud-native-platform-engineering/four-levels-of-agentic-software-development.md) | Report | Weave Intelligence | `ai-native-platform` | Enriched / Complete |
+| [Operationalizing AI Coding Agents in Regulated Industries](sources/cloud-native-platform-engineering/operationalizing-ai-coding-agents-regulated-industries.md) | Report | Weave Intelligence | `ai-native-platform`; `architect-permissions-mapper` (governed-access framing) | Enriched / Complete |
+| [The Great Unlock - How Platform Engineering Creates AI-Native Enterprises](sources/cloud-native-platform-engineering/the-great-unlock-ai-native-enterprises.md) | Report | Weave Intelligence | `ai-native-platform` | Enriched / Complete |
+| [State of AI in Platform Engineering](sources/cloud-native-platform-engineering/state-of-ai-in-platform-engineering.md) | Report | Weave Intelligence | `platform-state-of-play` | Enriched / Complete |
+| [State of Platform Engineering Report - Volume 4](sources/cloud-native-platform-engineering/state-of-platform-engineering-report-v4.md) | Report | Weave Intelligence | `platform-state-of-play` | Enriched / Complete |
 
 ## DevOps and CI/CD
 
 | Source | Kind | Author | Informs | Status |
 |---|---|---|---|---|
-| [Azure DevOps Explained](https://app.notion.com/3b8059b703e1817a8e5bf2b50db19c58) | Book | — | `architect-work-sync` (Azure DevOps Boards adapter) | Enriched / **Partial** |
-| [Designing and Implementing Microsoft DevOps Solutions AZ-400 Certification Guide](https://app.notion.com/3b8059b703e181c79cf2fc21b34f7958) | Book | Werner Rall | `architect-work-sync` (Azure DevOps); `cluster-lifecycle` (CI/CD) | Extracted / **Partial** |
-| [Implementing CI-CD Using Azure Pipelines](https://app.notion.com/3b8059b703e181c9994bef34268b57b3) | Book | Piti Champeethong, Roberto Mardeni | `cluster-lifecycle` (CI slot); `architect-workload-catalog` (pipeline-defined workloads) | Extracted / Complete |
-| [CI/CD Design Patterns](https://app.notion.com/3b8059b703e1819eb06fca5dfe61bda3) | Book | Garima Bajpai, Michel Schildmeijer, Muktesh Mishra, Pawel Piwosz | `cluster-lifecycle`; `platform-blueprint` (Integration & Delivery plane) | Extracted / Complete |
-| [Implementing GitOps with Kubernetes](https://app.notion.com/3b8059b703e1816aa550e1148a83411c) | Book | Pietro Libro, Artem Lajko | `cluster-lifecycle` (GitOps-first principle); `architect-infra-discovery` (drift detection) | Extracted / Complete |
-| [Hands-On Python for DevOps](https://app.notion.com/3b8059b703e1819682c5ef19380cb7a9) | Book | Ankur Roy | Implementation reference for `architect-*` adapter scripts (not a domain-knowledge source) | Extracted / Complete |
-| [Application Lifecycle Management on Microsoft Power Platform](https://app.notion.com/3b8059b703e1814db1bdccf9b62ca5c9) | Book | Benedikt Bergmann | Tangential — Power Platform ALM, not core to this plugin's scope | Extracted / Complete |
+| [Azure DevOps Explained](sources/devops-cicd/azure-devops-explained.md) | Book | — | `architect-work-sync` (Azure DevOps Boards adapter) | Enriched / **Partial** |
+| [Designing and Implementing Microsoft DevOps Solutions AZ-400 Certification Guide](sources/devops-cicd/designing-implementing-ms-devops-az400.md) | Book | Werner Rall | `architect-work-sync` (Azure DevOps); `cluster-lifecycle` (CI/CD) | Extracted / **Partial** |
+| [Implementing CI-CD Using Azure Pipelines](sources/devops-cicd/implementing-cicd-using-azure-pipelines.md) | Book | Piti Champeethong, Roberto Mardeni | `cluster-lifecycle` (CI slot); `architect-workload-catalog` (pipeline-defined workloads) | Extracted / Complete |
+| [CI/CD Design Patterns](sources/devops-cicd/cicd-design-patterns.md) | Book | Garima Bajpai, Michel Schildmeijer, Muktesh Mishra, Pawel Piwosz | `cluster-lifecycle`; `platform-blueprint` (Integration & Delivery plane) | Extracted / Complete |
+| [Implementing GitOps with Kubernetes](sources/devops-cicd/implementing-gitops-with-kubernetes.md) | Book | Pietro Libro, Artem Lajko | `cluster-lifecycle` (GitOps-first principle); `architect-infra-discovery` (drift detection) | Extracted / Complete |
+| [Hands-On Python for DevOps](sources/devops-cicd/hands-on-python-for-devops.md) | Book | Ankur Roy | Implementation reference for `architect-*` adapter scripts (not a domain-knowledge source) | Extracted / Complete |
+| [Application Lifecycle Management on Microsoft Power Platform](sources/devops-cicd/alm-on-microsoft-power-platform.md) | Book | Benedikt Bergmann | Tangential — Power Platform ALM, not core to this plugin's scope | Extracted / Complete |
 
 ## Data Engineering and Analytics (Kubernetes-adjacent only)
 
 | Source | Kind | Author | Informs | Status |
 |---|---|---|---|---|
-| [Big Data on Kubernetes](https://app.notion.com/3b8059b703e181d8b323c934229e65d1) | Book | Neylson Crepalde, Thariq Mahmood | `architect-workload-catalog` (data-pipeline workload type) | Extracted / Complete |
+| [Big Data on Kubernetes](sources/data-engineering-analytics/big-data-on-kubernetes.md) | Book | Neylson Crepalde, Thariq Mahmood | `architect-workload-catalog` (data-pipeline workload type) | Extracted / Complete |
 
 ## Software Engineering and Management (selective)
 
 | Source | Kind | Author | Informs | Status |
 |---|---|---|---|---|
-| [Technical Program Manager's Handbook](https://app.notion.com/3b8059b703e181508b08db999b9bd1ed) | Book | Joshua Alan Teter | `architect-persona-generator` (non-engineer personas); `architect-work-sync` | Extracted / Complete |
-| [Enterprise API Management](https://app.notion.com/3b8059b703e181dfb33ed7bfc1055600) | Book | Luis Weir | `architect-product-catalog` (API-as-product) | Mixed / Complete |
+| [Technical Program Manager's Handbook](sources/software-engineering-management/technical-program-managers-handbook.md) | Book | Joshua Alan Teter | `architect-persona-generator` (non-engineer personas); `architect-work-sync` | Extracted / Complete |
+| [Enterprise API Management](sources/software-engineering-management/enterprise-api-management.md) | Book | Luis Weir | `architect-product-catalog` (API-as-product) | Mixed / Complete |
 
 ## Out of scope for this plugin (logged in the same Notion library)
 
