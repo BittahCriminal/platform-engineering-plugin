@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Persona",
+  "description": "A generated platform persona, mapped onto the five-plane model from platform-blueprint.",
+  "type": "object",
+  "required": ["name", "plane"],
+  "properties": {
+    "name": { "type": "string" },
+    "plane": { "type": "string", "enum": ["developer-control", "integration-delivery", "resource", "security", "observability", "data-model-management"] },
+    "consumes": { "type": "array", "items": { "type": "string" } },
+    "creates": { "type": "array", "items": { "type": "string" } },
+    "org_mapping": { "type": "string", "description": "Source group this persona was derived from, e.g. an Entra ID group or GitHub team" }
+  }
+}
