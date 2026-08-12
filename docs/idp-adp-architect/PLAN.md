@@ -103,12 +103,15 @@ activates adapters for those. No system is hardcoded as "the" tracker — this m
 using whatever access a given consumer grants.
 
 **Books/Research corpus:**
-`research/SOURCES.md` is scaffolded now as an intake point. You'll attach your reading
-list/files separately; once received, they get folded in the same way the existing
-Reference skills cite their sources (IDP reference architectures, vulnerability/CDE
-whitepapers, state-of reports) — each Architect skill's SKILL.md front matter will
-credit the specific sources that shaped its logic (e.g., which RBAC/IAM standard, which
-persona-modeling framework).
+`research/SOURCES.md` is populated from the [Books and Research](https://app.notion.com/p/codingsanitynet/39e059b703e18022a5eaf4a9a447b9f0)
+Notion library — 32 sources mapped to the specific Reference- or Architect-tier skill
+each one informs (IDP reference architectures for Azure/AWS/GCP, Kubernetes and GitOps
+books, observability/vulnerability/CDE reports, Azure DevOps and CI/CD titles for the
+work-sync adapter). The library's AI/ML agent-building titles and general software-
+engineering titles were left out as out of scope for this plugin (see the source log's
+"Out of scope" section) — they likely belong to a separate Agentic Harnesses plugin.
+Each Architect skill's SKILL.md front matter will credit its specific sources once the
+skill itself is implemented (Phases 1–7 below).
 
 ## 6. Permissions/IAM/RBAC mapping approach
 
@@ -139,8 +142,11 @@ your original ask — one mapper, two ways of looking at its output.
 
 ## 8. Open items before Phase 1 can start for real
 
-- Attach the books/research list for `research/SOURCES.md`.
 - Confirm which Azure tenant/subscription and which Kubernetes context(s) are safe to
   run discovery against first (a non-production one is recommended for the pilot run).
 - When Phase 5 comes up, authorize whichever work-tracking connector(s) you want tested
   first (Linear/Jira/GitHub Projects/Azure DevOps) — no need to decide that now.
+- Decide whether the AI/ML and general software-engineering titles in the Books and
+  Research library (agent-building books, Clean Code series, etc.) should seed a
+  separate Agentic Harnesses plugin — logged but intentionally excluded from
+  `research/SOURCES.md` for now.
