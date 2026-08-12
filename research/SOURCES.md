@@ -73,6 +73,30 @@ original ask, not platform engineering — likely a separate plugin. Flagged as 
 decision rather than pulled in here; revisit once the Agentic Harnesses plugin scope is
 defined.
 
+## Web sources (agentic platform engineering series)
+
+Distinct from the Notion book-chapter citations above — these are the live web
+articles/repos fetched directly (Microsoft "All Things Azure" devblogs plus two
+GitHub repos), which ground the agentic-era addenda in `architect-infra-discovery`
+and `architect-permissions-mapper`, most of `architect-blueprint`, and the diagram
+redraws in [../docs/idp-adp-architect/diagrams.md](../docs/idp-adp-architect/diagrams.md).
+
+| Source | Kind | Informs | Status |
+|---|---|---|---|
+| [Agentic Platform Engineering with GitHub Copilot](https://devblogs.microsoft.com/all-things-azure/agentic-platform-engineering-with-github-copilot/) | Article | `architect-blueprint` (three-act model, GitHub-as-control-plane, Cluster Doctor); `architect-work-sync` (App of Apps, repository_dispatch pattern); Diagrams 7-9 | Fetched, fully read, diagrams extracted |
+| [microsoftgbb/agentic-platform-engineering](https://github.com/microsoftgbb/agentic-platform-engineering) | Repo (readme) | `architect-blueprint` | Fetched, fully read |
+| [Platform Engineering for the Agentic AI Era](https://devblogs.microsoft.com/all-things-azure/platform-engineering-for-the-agentic-ai-era/) | Article | `architect-blueprint` (agentic shift, layers of enforcement, org/repo agent inheritance, ops loop, role shift); Diagrams 1-6 | Fetched, fully read, diagrams extracted |
+| [Azure Container Apps observability](https://learn.microsoft.com/en-us/azure/container-apps/observability) | Docs page | `platform-observability` (tangential — Azure-specific observability surface) | Fetched, fully read |
+| [Azure/git-ape](https://github.com/Azure/git-ape) | Repo | `architect-blueprint` (framework-assessment loop) | Referenced by title only — direct fetch blocked by robots.txt |
+| [The Human-Scale Problem in Platform Engineering](https://devblogs.microsoft.com/all-things-azure/the-human-scale-problem-in-platform-engineering/) | Article | `architect-blueprint`; `architect-persona-generator` | Fetched, fully read |
+| [When Infrastructure Scales But Understanding Doesn't](https://devblogs.microsoft.com/all-things-azure/when-infrastructure-scales-but-understanding-doesnt/) | Article | `architect-blueprint` (tool sprawl, golden/paved paths, domain-specific agents, Context Engineering) | Fetched, fully read |
+| [DevExpGbb/agentic-platform-engineering](https://github.com/DevExpGbb/agentic-platform-engineering) | Repo (readme) | `architect-blueprint` (Act-1/2/3 folder structure, platform-as-product value chain) | Fetched, fully read |
+| [AKS + RunAI Model Streamer walkthrough](https://blog.aks.azure.com/2026/07/13/runai-streamer-vllm) | Article | `architect-permissions-mapper` (Workload Identity Federation addendum, `legacy-credential` flag) | Fetched, fully read |
+| [Putting Agentic Platform Engineering to the Test](https://devblogs.microsoft.com/all-things-azure/putting-agentic-platform-engineering-to-the-test/) | Article | `architect-blueprint` (Git-Ape demo repo context, `@git-ape`/`@Git-ape Onboarding` agent invocation pattern) | Fetched, fully read |
+| [Agentic DevOps: Practices, Principles, and Strategic Direction](https://devblogs.microsoft.com/all-things-azure/agentic-devops-practices-principles-strategic-direction/) | Article | `architect-blueprint` (Agentic DevOps Maturity Model rubric); `architect-persona-generator` (System Designer/Agent Operator/Quality Steward personas) | Fetched, fully read — no diagram images (all native HTML tables) |
+| [Best of Both Worlds for Agentic Refactoring: GitHub Copilot + MicroVMs via Docker Sandbox](https://devblogs.microsoft.com/all-things-azure/best-of-both-worlds-for-agentic-refactoring-github-copilot-microvms-via-docker-sandbox/) | Article | Tangential — sandboxed agent execution, not core to this plugin's `.platform/**` scope | Fetched, fully read — page content polluted with unrelated spam comments below the article boundary (filtered out); no diagram images (terminal/IDE screenshots only) |
+| [Frameworks Only Matter When They Force Decisions](https://devblogs.microsoft.com/all-things-azure/frameworks-only-matter-when-they-force-decisions/) | Article | `architect-blueprint` (framework-assessment loop, WAF/NIST scorecard pattern); `architect-infra-discovery` (policy-assignment-as-resource addendum) | Fetched, fully read — no diagram images (assessment loop and scorecards are prose/HTML tables) |
+
 ## Not yet used
 
 `Streamlit for Data Science`, `Python Feature Engineering Cookbook`, `The Definitive
