@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IdentityBinding",
+  "description": "A normalized permission grant, unifying Azure RBAC/Entra, AWS IAM, and Kubernetes RBAC.",
+  "type": "object",
+  "required": ["principal", "role", "resource_id", "source_system"],
+  "properties": {
+    "principal": { "type": "string", "description": "User, group, or service principal identifier" },
+    "role": { "type": "string", "description": "Role/policy/ClusterRole name or equivalent" },
+    "scope": { "type": "string", "description": "Scope the role applies at (subscription, resource group, namespace, etc.)" },
+    "resource_id": { "type": "string", "description": "Resource.id this binding applies to, or '*' for scope-wide" },
+    "source_system": { "type": "string", "enum": ["azure-rbac", "entra-id", "aws-iam", "k8s-rbac", "other"] },
+    "flags": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["over-privileged", "cross-boundary", "orphaned", "unowned"] }
+    }
+  }
+}

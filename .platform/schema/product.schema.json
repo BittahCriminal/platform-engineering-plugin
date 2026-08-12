@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Product",
+  "description": "A self-service catalog entry: a golden path packaged as a platform product.",
+  "type": "object",
+  "required": ["name", "golden_path"],
+  "properties": {
+    "name": { "type": "string" },
+    "golden_path": { "type": "string", "description": "Reference to the golden-path workflow this product provisions" },
+    "workload_types": { "type": "array", "items": { "type": "string" } },
+    "sla": { "type": "string" },
+    "owner_persona": { "type": "string" }
+  }
+}
