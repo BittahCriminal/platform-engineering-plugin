@@ -90,6 +90,44 @@ Shift-left as toil-shifting; blocking on any CVE; absolute blocks without
 escape hatches; mandated platforms with poor DX; more dashboards as a fix
 for scale; isolated reporting silos; manual compliance documentation.
 
+## Addendum — Dapr's workload-level permission graph (additional, not authoritative)
+
+[Dapr](https://docs.dapr.io/) contributes a second, workload-native permission and
+identity layer wherever it's already deployed as a service mesh/runtime sidecar — this
+skill should treat it as an *additional* source of access-control findings layered on
+top of K8s RBAC, cloud IAM, and network policy, never as the authoritative graph on its
+own. An app ID is Dapr's atomic identity unit, and every sidecar-to-sidecar call is
+mTLS-encrypted by default via **Sentry**, Dapr's built-in certificate authority —
+default certificate validity is 24 hours with a 15-minute clock-skew allowance, which is
+a materially shorter rotation window than most static cloud-IAM credentials this skill
+already flags for rotation
+([security concept](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/concepts/security-concept.md);
+[mTLS operations](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/operations/security/mtls.md)).
+
+**Where Dapr's own access controls live, and what to check for each.** A Component
+(the pluggable backend behind a building-block API, e.g. `type: state.redis`) can carry
+a `scopes` list restricting which app IDs may load it — an unscoped Component (no
+`scopes` set) is reachable by every app ID in the namespace and should be flagged the
+same way this skill already flags an over-broad IAM policy. Service-invocation **ACLs**
+restrict which app IDs may call which operations on a given app. **`WorkflowAccessPolicy`**
+governs which external app IDs may start, query, or terminate another app's Workflow
+executions — a Workflow app with no access policy defined should be treated as
+equivalent to an unauthenticated internal API. Two additional, easily-confused token
+layers close the local sidecar boundary: an API token that the app must present *to* its
+own sidecar, and a separate app API token the sidecar must present when calling back
+*into* the app — both should be verified present, not assumed, since either being unset
+leaves that local hop unauthenticated
+([component scopes](https://github.com/dapr/docs/blob/f5d0b6d/daprdocs/content/en/operations/components/component-scopes.md)).
+
+**Do not treat Dapr's graph as universal.** Dapr secures *Dapr-mediated* traffic only —
+a workload can still reach a dependency directly (bypassing its own sidecar), and
+Dapr's Sentry-issued identities say nothing about the cloud IAM role or K8s ServiceAccount
+that same pod is also running under. This skill's over-privilege and unscoped-access
+findings should merge Dapr's ACL/scope/`WorkflowAccessPolicy` data with the existing
+K8s RBAC and cloud IAM findings, not substitute one for the other. See
+[../../docs/idp-adp-architect/workload-spec-components.md](../../docs/idp-adp-architect/workload-spec-components.md)
+for how this compares to Score, Radius, and Kratix's contributions to the security plane.
+
 ## As an agent
 
 When reviewing platform or service security: check the base image is the

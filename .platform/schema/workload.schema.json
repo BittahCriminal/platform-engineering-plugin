@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Workload",
+  "description": "A Score-style workload definition derived from discovered resources.",
+  "type": "object",
+  "required": ["id", "type"],
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "type": "string", "description": "e.g. web-service, batch-job, ml-training, data-pipeline" },
+    "spec": { "type": "object", "description": "Score-style workload spec body" },
+    "resources": { "type": "array", "items": { "type": "string" }, "description": "Resource.id references" },
+    "owner_persona": { "type": "string" }
+  }
+}

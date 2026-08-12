@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Resource",
+  "description": "A discovered infrastructure resource, normalized across cloud/local providers.",
+  "type": "object",
+  "required": ["id", "provider", "type"],
+  "properties": {
+    "id": { "type": "string", "description": "Provider-native resource identifier (ARM ID, ARN, K8s UID, etc.)" },
+    "provider": { "type": "string", "enum": ["azure", "aws", "gcp", "onprem-k8s", "other"] },
+    "type": { "type": "string", "description": "Normalized resource type, e.g. compute.vm, k8s.deployment, storage.bucket" },
+    "region": { "type": "string" },
+    "tags": { "type": "object", "additionalProperties": { "type": "string" } },
+    "owner_tag": { "type": "string", "description": "Tag/label indicating a human or team owner, if present" },
+    "discovered_at": { "type": "string", "format": "date-time" }
+  }
+}
